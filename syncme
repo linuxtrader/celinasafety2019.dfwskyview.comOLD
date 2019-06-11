@@ -1,0 +1,21 @@
+#!/bin/bash
+
+excludes=" --exclude '.git/*' --exclude 'project.mobirise' --exclude '*/.DS_Store' --exclude './.DS_Store' --exclude '.DS_Store' "
+
+base=celinasafety2019
+subdomain=${base}.dfwskyview.com
+html=~/Documents/aws/subdomains/$base
+media=~/Movies/clients/$base/media
+
+
+cd $html
+
+# Cant use --delete here since there are multiple source locations
+echo Syncing Standard content to $subdomain
+eval aws s3 sync ${html} s3://${subdomain} ${excludes}
+
+echo Syncing media to $subdomain
+eval aws s3 sync ${media} s3://${subdomain}/media/ ${excludes}
+
+echo
+echo DONT run ./invalidate UNTIL after review on netlify.

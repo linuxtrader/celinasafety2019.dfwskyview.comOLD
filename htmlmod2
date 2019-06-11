@@ -1,0 +1,31 @@
+
+# Fix JavaScript lib to allow non-youtube videos
+
+grep -q scriptnew.js index.html && echo Nothing to do && exit 0
+
+cp /Users/danrose/Documents/aws/clients/scriptnew497.js   assets/theme/js/scriptnew.js
+
+# Backup the mobirise version
+echo >> index.html
+cp index.html index.html.orig
+
+echo Fixing link_head run-on if still exists.
+sed -e 's=</link></head>=</link> \
+</head>=' index.html > new.html
+
+# Add my css, replace mb-js, add my js
+echo Adding mystylec.css, myscriptc.js and scriptnew.js
+sed -e '/<\/head>/i \
+\ \ <link rel="stylesheet" href="assets\/dan\/css\/mystylec.css" type="text\/css"> \
+'   -e 's=assets/theme/js/script.js=assets/theme/js/scriptnew.js=' \
+    -e '/<\/body>/i \
+    \ \ <script src="assets\/dan\/js\/myscriptc.js"><\/script> \
+'   new.html > index.html
+
+#echo; echo showing: diff index.html.orig index.html
+#diff index.html.orig index.html
+
+echo; echo
+ls -l videomobile.html
+
+rm new.html

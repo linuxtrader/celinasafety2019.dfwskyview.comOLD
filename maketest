@@ -1,0 +1,17 @@
+#! /bin/bash
+
+netlify=celinasafety19
+
+git add .
+echo "What changes?"
+read ans 
+git commit -m "$ans"
+
+echo pushing to git master,  points to remote
+echo This will be pulled by netlify when setup.
+echo
+git push 
+
+echo
+echo
+echo after some time, confirm netlify at http://${netlify}.dfwskyview.com
